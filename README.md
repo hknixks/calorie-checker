@@ -17,10 +17,10 @@ fat at ~27% of calories, carbs take the rest. You can override the calorie numbe
 
 | Path | What it does |
 |---|---|
-| 📷 Photo | Upload a plate, Gemini names the foods and estimates grams. No camera permission. |
-| 🔍 Search | Fuzzy search over 131 built-in foods plus your own. |
-| 🏷️ Barcode | Type the number or decode it from a photo; looked up in Open Food Facts. |
-| ✏️ Custom | Create a food from per-100 g or per-serving numbers; saved for reuse. |
+| Scan Meal | Upload a plate, Gemini names the foods and estimates grams. No camera permission. |
+| Search Foods | Fuzzy search over 131 built-in foods plus your own. |
+| Scan Barcode | Type the number or decode it from a photo; looked up in Open Food Facts. |
+| Create Custom Food | Create a food from per-100 g or per-serving numbers; saved for reuse. |
 
 **Daily tracking** — calorie ring against your target, macro bars, meals grouped into breakfast /
 lunch / dinner / snacks, any past day reachable from the day switcher.
@@ -134,7 +134,33 @@ when you are already on your phone.
 **Hidden ingredients are invisible** — oil, butter, stock cubes, sugar in the zobo.
 
 **Backups matter.** Everything is in this browser. Clearing site data wipes it, so use
-Settings → Export backup now and then.
+Profile → Export backup now and then. There is no matching import yet — see Roadmap below.
+
+## Roadmap — not built yet
+
+Things that are genuinely missing, not just polish, roughly in the order they'd matter most:
+
+- **No import for the backup export.** Settings can export a JSON snapshot, but there is no
+  matching "restore from file" — losing the browser's storage today means re-entering everything
+  by hand. This is the biggest real gap.
+- **No account or cloud sync.** Data lives in one browser's `localStorage` only. A second device,
+  or the same device after clearing site data, starts empty.
+- **No automated tests.** Every feature so far has been verified by hand in the browser each
+  session, not by a test suite. There's nothing stopping a future change from silently breaking
+  the calorie math or the food matcher.
+- **Barcode photo decoding only works where the browser has `BarcodeDetector`** (Chrome/Edge on
+  Android, patchy elsewhere — not Windows desktop Chrome, not Firefox, not Safari). A JS-based
+  decoder (e.g. `@zxing/browser`) would make it work everywhere instead of falling back to typing
+  the number.
+- **No push notifications when the app is closed.** Meal reminders only fire while a tab is open —
+  a real background reminder needs a push server or a native/PWA wrapper.
+- **Metric only.** No lbs/oz or ft/in option for weight and height.
+- **Single profile.** No household/family switching between multiple people's logs on one device.
+- **The food table is a compiled estimate**, not lab-measured — see "About the numbers" below.
+  Coverage could grow (more regional dishes, more Nigerian-brand barcodes as fallback data when
+  Open Food Facts doesn't have them).
+- **No formal accessibility pass** beyond what came up organically (focus states, reduced-motion,
+  color-contrast-checked charts) — no screen-reader testing has been done.
 
 ## About the numbers
 
