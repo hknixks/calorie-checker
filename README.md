@@ -1,46 +1,52 @@
 # Calorie Checker
 
-A calorie and macro tracker built around Nigerian and West African food, because the generic
-nutrition apps do not know what eba, egusi or ayamase are.
+[![GitHub repo](https://img.shields.io/badge/GitHub-hknixks%2Fcalorie--checker-181717?style=flat&logo=github&logoColor=white)](https://github.com/hknixks/calorie-checker)
 
-Photo in → Gemini names the foods → each name is matched against a local Nigerian food table →
-you fix anything wrong → it lands in a daily log with targets worked out from your own body.
+A calorie and macro tracker built around Nigerian and West African food, because most nutrition
+apps have never heard of eba, egusi, or ayamase.
+
+Here's the loop: snap a photo of your plate, Gemini figures out what's on it, and each item gets
+matched against a local Nigerian food table. You fix anything it got wrong, and it lands in your
+daily log with targets worked out from your own body.
 
 ## Features
 
-**Profile and targets** — sex, age, height, weight, activity level and goal. Calorie target from
-the Mifflin-St Jeor equation × an activity multiplier, adjusted for the rate you want to lose or
-gain (1 kg/week ≈ 1100 kcal/day), floored at a safe minimum. Protein is set per kg of bodyweight,
-fat at ~27% of calories, carbs take the rest. You can override the calorie number outright.
+**Profile and targets.** Sex, age, height, weight, activity level, and goal. Your calorie target
+comes from the Mifflin-St Jeor equation times an activity multiplier, adjusted for how fast you
+want to lose or gain (roughly 1100 kcal/day per kg/week), with a safe floor so it never suggests
+something reckless. Protein scales with your bodyweight, fat sits around 27% of calories, and
+carbs take whatever's left. You can also just override the number yourself if you'd rather.
 
 **Four ways to log food**
 
 | Path | What it does |
 |---|---|
-| Scan Meal | Upload a plate, Gemini names the foods and estimates grams. No camera permission. |
-| Search Foods | Fuzzy search over 131 built-in foods plus your own. |
-| Scan Barcode | Type the number or decode it from a photo; looked up in Open Food Facts. |
-| Create Custom Food | Create a food from per-100 g or per-serving numbers; saved for reuse. |
+| Scan Meal | Upload a plate, Gemini names the foods and estimates grams. No camera permission needed. |
+| Search Foods | Fuzzy search over 131 built-in foods plus anything you've added yourself. |
+| Scan Barcode | Type the number or decode it from a photo, looked up through Open Food Facts. |
+| Create Custom Food | Enter your own numbers, per 100 g or per serving, and it's saved for next time. |
 
-**Daily tracking** — calorie ring against your target, macro bars, meals grouped into breakfast /
-lunch / dinner / snacks, any past day reachable from the day switcher.
+**Daily tracking.** A calorie ring against your target, macro bars, meals grouped into breakfast,
+lunch, dinner, and snacks, and any past day is just a tap away on the day switcher.
 
-**Water** — tap glasses or use ± buttons, with a target suggested from your weight (35 ml/kg).
+**Water.** Tap the glasses or use the plus and minus buttons. The target is suggested from your
+weight (35 ml/kg) but you can change it.
 
-**Weight** — one reading per day, trend line over the last 30, and saving a reading updates your
-profile weight so the calorie target keeps up.
+**Weight.** One reading per day, a trend line over the last 30, and saving a new reading updates
+your profile weight so your calorie target actually keeps up with you.
 
-**Progress and reports** — 14-day calorie bar chart against target, logging streak, and a weekly
-report: average calories, days within 10% of target, days under/over, average water, weight
-change, macro split and most-logged foods. Charts are hand-rolled SVG, no chart library.
+**Progress and reports.** A 14-day calorie chart against your target, your logging streak, and a
+weekly report covering average calories, how many days landed within 10% of target, average water,
+weight change, your macro split, and your most-logged foods. The charts are hand-rolled SVG, no
+charting library involved.
 
-**Reminders** — per-meal times and days, delivered as browser notifications.
+**Reminders.** Set times and days per meal, delivered as browser notifications.
 
-**Dark mode** — light, dark, or follow the system.
+**Dark mode.** Light, dark, or just follow your system setting.
 
-**Offline** — a service worker caches the app after the first visit. The food table is part of the
-bundle, so searching, logging and every chart work with no connection. Only Gemini and Open Food
-Facts need the network.
+**Offline support.** A service worker caches the app after your first visit, and the food table
+ships inside the app itself, so searching, logging, and every chart keep working with no
+connection. Only Gemini and Open Food Facts actually need the network.
 
 ## Setup
 
@@ -48,23 +54,23 @@ Facts need the network.
 npm install
 ```
 
-Add your free Gemini key to `.env` (already created, just fill it in):
+Add your free Gemini key to `.env` (it's already created, just fill it in):
 
 ```
 VITE_GEMINI_API_KEY=your_key_here
 ```
 
-Get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Then:
+You can get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Then:
 
 ```bash
 npm run dev
 ```
 
-Open http://localhost:5178 and set your profile first, under Settings.
+Open http://localhost:5178 and set up your profile first, under Settings.
 
-**Vite only reads `.env` at startup** — after editing it, stop the dev server and start it again.
-The Settings tab shows whether a key was picked up. Without a key everything except photo
-recognition still works.
+**Vite only reads `.env` at startup**, so after editing it, stop the dev server and start it again.
+The Settings tab will tell you whether a key was actually picked up. Without one, everything except
+photo recognition still works fine.
 
 ### Using it on your phone
 
@@ -72,8 +78,9 @@ recognition still works.
 npm run dev -- --host
 ```
 
-Open the printed network address (like `http://192.168.0.5:5178`) on your phone on the same
-Wi-Fi, then add it to your home screen — there is a web manifest, so it opens like an app.
+Open the network address it prints (something like `http://192.168.0.5:5178`) on your phone while
+it's on the same Wi-Fi, then add it to your home screen. There's a web manifest, so it opens up
+like a real app.
 
 Offline caching and notifications only kick in on a real build (`npm run build && npm run
 preview`), not the dev server.
@@ -84,10 +91,10 @@ preview`), not the dev server.
 |---|---|
 | `npm run dev` | Dev server on port 5178 |
 | `npm run build` | Typecheck, then build to `dist/` |
-| `npm run preview` | Serve the built `dist/` — use this to test offline mode |
+| `npm run preview` | Serve the built `dist/`, useful for testing offline mode |
 | `npm run typecheck` | TypeScript only |
 
-## How it is put together
+## How it's put together
 
 ```
 src/
@@ -107,77 +114,82 @@ src/
 public/sw.js             offline cache
 ```
 
-There is **no backend**. Meals, weight, water and your foods live in `localStorage`; the browser
-talks to Gemini and Open Food Facts directly.
+There's **no backend** here. Meals, weight, water, and your custom foods all live in
+`localStorage`, and the browser talks to Gemini and Open Food Facts directly.
 
-Logged items store their own copy of the nutrition numbers, so editing or deleting a food later
-never rewrites days you already recorded.
+Logged items keep their own copy of the nutrition numbers, so editing or deleting a food later
+never rewrites days you've already recorded.
 
-One consequence of keeping the key in `.env`: Vite inlines `VITE_*` values into the built
-JavaScript, so anyone who can load the built site can read the key. Fine on your own machine or
-phone. If you ever host this publicly, move the Gemini call behind a small server-side proxy.
+Worth knowing: since the key lives in `.env`, Vite inlines it into the built JavaScript, so anyone
+who can load the built site can technically read it. That's fine for your own machine or phone.
+If you ever host this publicly for other people, put the Gemini call behind a small server-side
+proxy instead.
 
 ## Known limits
 
-**Portion size is the weak link**, not food recognition. Check the grams on every row.
+**Portion size is the weak link, not food recognition.** Always worth checking the grams on
+each row.
 
-**Barcode photo decoding needs a browser with `BarcodeDetector`** — Chrome on Android has it,
-Windows desktop Chrome generally does not. Where it is missing the button is disabled and you type
-the number instead. Open Food Facts is also crowd-sourced, so many Nigerian products are simply
-not in it; make those custom foods.
+**Barcode photo decoding needs a browser with `BarcodeDetector`.** Chrome on Android has it,
+Windows desktop Chrome generally doesn't. Where it's missing, the button just disables itself and
+you type the number instead. Open Food Facts is also crowd-sourced, so plenty of Nigerian products
+simply aren't in it yet, in which case just add them as a custom food.
 
-**Reminders only fire while the app is open in a tab.** A web page cannot wake itself after you
-close it — real background alarms need a push server or a native app. Treat them as nudges for
-when you are already on your phone.
+**Reminders only fire while the app is open in a tab.** A web page can't wake itself up after you
+close it, real background alarms need a push server or a native app, so treat these as nudges for
+when you're already on your phone rather than true alarms.
 
-**Look-alikes get confused** — jollof vs fried rice vs coconut rice; amala vs any dark swallow.
-**Hidden ingredients are invisible** — oil, butter, stock cubes, sugar in the zobo.
+**Look-alikes still trip it up.** Jollof vs fried rice vs coconut rice, or amala vs any other dark
+swallow, can be genuinely hard to tell apart from a photo. Hidden ingredients are invisible too:
+oil, butter, stock cubes, the sugar in your zobo.
 
-**Backups matter.** Everything is in this browser. Clearing site data wipes it, so use
-Profile → Export backup now and then. There is no matching import yet — see Roadmap below.
+**Backups matter.** Everything lives in this one browser. Clearing site data wipes it, so use
+Profile → Export backup every once in a while. There's no matching import yet, see the roadmap
+below.
 
-## Roadmap — not built yet
+## Roadmap, or what's not built yet
 
-Things that are genuinely missing, not just polish, roughly in the order they'd matter most:
+The genuinely missing pieces, not just polish, roughly in order of how much they'd matter:
 
-- **No import for the backup export.** Settings can export a JSON snapshot, but there is no
-  matching "restore from file" — losing the browser's storage today means re-entering everything
-  by hand. This is the biggest real gap.
-- **No account or cloud sync.** Data lives in one browser's `localStorage` only. A second device,
-  or the same device after clearing site data, starts empty.
+- **No import for the backup export.** Settings can export a JSON snapshot, but there's no
+  "restore from file" to go with it. Losing the browser's storage today means re-entering
+  everything by hand. This is the biggest real gap.
+- **No account or cloud sync.** Data lives in one browser's `localStorage` and nowhere else. A
+  second device, or the same device after clearing site data, starts completely empty.
 - **No automated tests.** Every feature so far has been verified by hand in the browser each
-  session, not by a test suite. There's nothing stopping a future change from silently breaking
-  the calorie math or the food matcher.
-- **Barcode photo decoding only works where the browser has `BarcodeDetector`** (Chrome/Edge on
-  Android, patchy elsewhere — not Windows desktop Chrome, not Firefox, not Safari). A JS-based
-  decoder (e.g. `@zxing/browser`) would make it work everywhere instead of falling back to typing
-  the number.
-- **No push notifications when the app is closed.** Meal reminders only fire while a tab is open —
-  a real background reminder needs a push server or a native/PWA wrapper.
+  session, not by a test suite, so nothing's stopping a future change from quietly breaking the
+  calorie math or the food matcher.
+- **Barcode photo decoding only works where the browser supports `BarcodeDetector`** (Chrome and
+  Edge on Android, patchy everywhere else, not Windows desktop Chrome, Firefox, or Safari). A
+  JS-based decoder like `@zxing/browser` would make this work everywhere instead of falling back
+  to typing the number.
+- **No push notifications once the app is closed.** Meal reminders only fire while a tab is open;
+  real background reminders need a push server or a native/PWA wrapper.
 - **Metric only.** No lbs/oz or ft/in option for weight and height.
-- **Single profile.** No household/family switching between multiple people's logs on one device.
-- **The food table is a compiled estimate**, not lab-measured — see "About the numbers" below.
-  Coverage could grow (more regional dishes, more Nigerian-brand barcodes as fallback data when
-  Open Food Facts doesn't have them).
-- **No formal accessibility pass** beyond what came up organically (focus states, reduced-motion,
-  color-contrast-checked charts) — no screen-reader testing has been done.
+- **One profile per device.** No switching between household members' logs.
+- **The food table is a compiled estimate, not lab-measured food**, see "About the numbers" below.
+  Coverage could keep growing too: more regional dishes, more Nigerian-brand barcodes as a fallback
+  when Open Food Facts comes up empty.
+- **No formal accessibility pass** beyond what came up naturally along the way (focus states,
+  reduced-motion support, contrast-checked charts). No real screen-reader testing has happened yet.
 
 ## About the numbers
 
-Values are **compiled estimates**, not readings from a live nutrition API:
+These values are **compiled estimates**, not readings pulled from a live nutrition API:
 
-- Ingredient figures follow standard composition tables (FAO/INFOODS West African FCT 2019,
-  USDA ranges).
-- Composite dishes — jollof, egusi, ayamase, moi moi — are calculated from typical home recipes.
-- Soups and stews include their cooking oil, which is where most of their calories live. A table
-  listing only dry ingredients would under-count egusi badly.
+- Ingredient figures follow standard composition tables (FAO/INFOODS West African FCT 2019, USDA
+  ranges).
+- Composite dishes like jollof, egusi, ayamase, and moi moi are calculated from typical home
+  recipes.
+- Soups and stews include their cooking oil, which is where most of their calories actually live.
+  A table listing only the dry ingredients would badly under-count something like egusi.
 
-Assume **±20%**. A buka portion is not a home portion, palm oil varies hugely, and a photo cannot
-show the oil at the bottom of the bowl.
+Assume roughly **±20%**. A buka portion isn't a home portion, palm oil varies a lot from cook to
+cook, and a photo can't show you the oil sitting at the bottom of the bowl.
 
-This is a food diary, not a medical or dietary tool, and not advice. Talk to a doctor or dietitian
-before making big changes — especially if you are pregnant, diabetic, or managing a health
-condition.
+This is meant to be a food diary, not a medical or dietary tool, and definitely not advice. Talk
+to a doctor or dietitian before making any big changes, especially if you're pregnant, diabetic,
+or managing a health condition.
 
-Adding a food means one entry in `src/data/foods.ts` — `per100g`, some `servings`, and any
-`aliases` you would expect the AI to use.
+Adding a new food just means one entry in `src/data/foods.ts`: its `per100g` numbers, a few
+`servings`, and any `aliases` you'd expect the AI to call it.
